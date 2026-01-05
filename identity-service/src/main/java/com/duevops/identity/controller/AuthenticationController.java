@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devteria.identity.dto.request.*;
+import com.duevops.identity.dto.request.*;
 import com.duevops.identity.dto.response.AuthenticationResponse;
 import com.duevops.identity.dto.response.IntrospectResponse;
 import com.duevops.identity.service.AuthenticationService;
