@@ -3,6 +3,8 @@ package com.duevops.identity.service;
 import java.util.HashSet;
 import java.util.List;
 
+import com.duevops.identity.mapper.ProfileMapper;
+import com.duevops.identity.repository.httpclient.ProfileClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,8 +35,9 @@ public class UserService {
     UserRepository userRepository;
     RoleRepository roleRepository;
     UserMapper userMapper;
+    ProfileMapper profileMapper;
     PasswordEncoder passwordEncoder;
-
+    ProfileClient profileClient;
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
 
@@ -45,8 +48,12 @@ public class UserService {
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
+        user = userRepository.save(user);
+        var profileRequest = profileMapper.toProfileCreationRequest(request);
+        profileRequest.setUserId(user.getId());
+        profileClient.createUserProfile(profileRequest);
 
-        return userMapper.toUserResponse(userRepository.save(user));
+        return userMapper.toUserResponse(user);
     }
 
     public UserResponse getMyInfo() {

@@ -7,23 +7,16 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-public class UserProfileController {
+public class InternalUserProfileController {
     UserProfileService  userProfileService;
-    @GetMapping("/users")
-    public List<UserProfileResponse> getAllProfile() {
-        return  userProfileService.getAllProfiles();
-    }
-    @GetMapping("/users/{profiled}")
-    public UserProfileResponse getUserProfile(@PathVariable String profiled){
-        return  userProfileService.getUserProfileById(profiled);
+    @PostMapping("/internal/users")
+    public UserProfileResponse createProfile(@RequestBody ProfileCreationRequest request) {
+        return  userProfileService.createUserProfile(request);
     }
 }
