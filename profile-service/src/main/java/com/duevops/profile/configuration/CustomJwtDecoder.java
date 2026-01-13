@@ -1,4 +1,4 @@
-package com.duevops.identity.configuration;
+package com.duevops.profile.configuration;
 
 import java.text.ParseException;
 
@@ -7,17 +7,10 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
 
-import com.duevops.identity.service.AuthenticationService;
 import com.nimbusds.jwt.SignedJWT;
 
 @Component
 public class CustomJwtDecoder implements JwtDecoder {
-
-    private final AuthenticationService authenticationService;
-
-    public CustomJwtDecoder(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
 
     @Override
     public Jwt decode(String token) throws JwtException {

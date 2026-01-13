@@ -3,8 +3,6 @@ package com.duevops.identity.service;
 import java.util.HashSet;
 import java.util.List;
 
-import com.duevops.identity.mapper.ProfileMapper;
-import com.duevops.identity.repository.httpclient.ProfileClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,9 +16,11 @@ import com.duevops.identity.entity.Role;
 import com.duevops.identity.entity.User;
 import com.duevops.identity.exception.AppException;
 import com.duevops.identity.exception.ErrorCode;
+import com.duevops.identity.mapper.ProfileMapper;
 import com.duevops.identity.mapper.UserMapper;
 import com.duevops.identity.repository.RoleRepository;
 import com.duevops.identity.repository.UserRepository;
+import com.duevops.identity.repository.httpclient.ProfileClient;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +38,7 @@ public class UserService {
     ProfileMapper profileMapper;
     PasswordEncoder passwordEncoder;
     ProfileClient profileClient;
+
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
 
@@ -51,6 +52,7 @@ public class UserService {
         user = userRepository.save(user);
         var profileRequest = profileMapper.toProfileCreationRequest(request);
         profileRequest.setUserId(user.getId());
+
         profileClient.createUserProfile(profileRequest);
 
         return userMapper.toUserResponse(user);

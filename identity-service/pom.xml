@@ -161,10 +161,10 @@
 				</executions>
 				<configuration>
 					<excludes>
-						<exclude>com/devteria/identity/dto/**</exclude>
-						<exclude>com/devteria/identity/entity/**</exclude>
-						<exclude>com/devteria/identity/mapper/**</exclude>
-						<exclude>com/devteria/identity/configuration/**</exclude>
+						<exclude>com/duevops/identity/dto/**</exclude>
+						<exclude>com/duevops/identity/entity/**</exclude>
+						<exclude>com/duevops/identity/mapper/**</exclude>
+						<exclude>com/duevops/identity/configuration/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

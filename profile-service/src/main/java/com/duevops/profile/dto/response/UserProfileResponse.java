@@ -1,9 +1,9 @@
 package com.duevops.profile.dto.response;
 
+import java.time.LocalDate;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -11,9 +11,9 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserProfileResponse {
-    String id ;
-    String firstName ;
-    String lastName ;
+    String id;
+    String firstName;
+    String lastName;
     LocalDate dob;
     String city;
 }

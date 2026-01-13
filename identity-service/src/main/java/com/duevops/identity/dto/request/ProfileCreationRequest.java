@@ -1,11 +1,9 @@
 package com.duevops.identity.dto.request;
 
-import com.duevops.identity.validator.DobConstraint;
-import jakarta.validation.constraints.Size;
+import java.time.LocalDate;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
