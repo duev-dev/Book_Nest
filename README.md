@@ -1,2 +1,2 @@
-# bookteria
-The bookteria project, a book social network
+# bookNest
+The bookNest project, a book social network
