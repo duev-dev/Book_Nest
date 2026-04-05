@@ -1,0 +1,12 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /notification
+spring:
+  application:
+    name: notification-service
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/notification-service?authSource=admin
+sendgrid:
+  api-key: awrw9jbnqub7bcyo7i7msdaz5rnqjy5k

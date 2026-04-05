@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.duevops.identity.configuration.AuthenticationRequestInterceptor;
 import com.duevops.identity.dto.request.ProfileCreationRequest;
 import com.duevops.identity.dto.response.UserProfileResponse;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(
         name = "profile-service",
@@ -17,5 +18,6 @@ import com.duevops.identity.dto.response.UserProfileResponse;
         configuration = {AuthenticationRequestInterceptor.class})
 public interface ProfileClient {
     @PostMapping(value = "/internal/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    UserProfileResponse createUserProfile(@RequestBody ProfileCreationRequest request);
+    UserProfileResponse createUserProfile(
+            @RequestBody ProfileCreationRequest request);
 }
