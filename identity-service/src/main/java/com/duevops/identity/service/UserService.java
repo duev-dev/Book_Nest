@@ -16,14 +16,18 @@ import com.duevops.identity.entity.Role;
 import com.duevops.identity.entity.User;
 import com.duevops.identity.exception.AppException;
 import com.duevops.identity.exception.ErrorCode;
+import com.duevops.identity.mapper.ProfileMapper;
 import com.duevops.identity.mapper.UserMapper;
 import com.duevops.identity.repository.RoleRepository;
 import com.duevops.identity.repository.UserRepository;
+import com.duevops.identity.repository.httpclient.ProfileClient;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +37,9 @@ public class UserService {
     UserRepository userRepository;
     RoleRepository roleRepository;
     UserMapper userMapper;
+    ProfileMapper profileMapper;
     PasswordEncoder passwordEncoder;
+    ProfileClient profileClient;
 
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
@@ -45,8 +51,15 @@ public class UserService {
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
+        user = userRepository.save(user);
+        var profileRequest = profileMapper.toProfileCreationRequest(request);
+        profileRequest.setUserId(user.getId());
 
-        return userMapper.toUserResponse(userRepository.save(user));
+
+        profileClient.createUserProfile(profileRequest);
+
+
+        return userMapper.toUserResponse(user);
     }
 
     public UserResponse getMyInfo() {
